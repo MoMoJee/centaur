@@ -46,6 +46,12 @@ product-specific defaults solely to make them neutral unless the user asks.
 - Use conventional commit prefixes when a commit is requested: `feat:`, `fix:`,
   `docs:`, `refactor:`, `test:`, or `chore:`.
 
+## Fork working loop
+
+Start at the [fork documentation index](docs/index.md). Record the plan before
+implementation, validate against the affected entry points, then record the
+result in the changelog. See [document maintenance](docs/documentation.md).
+
 ## Architecture boundaries
 
 The durable request path is:

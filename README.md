@@ -1,3 +1,5 @@
+# Centaur
+
 <img width="1500" height="500" alt="image" src="https://github.com/user-attachments/assets/cc85cdb1-5a72-4eb2-ba1b-2e0a8fbbf691" />
 
 <h4 align="center">
@@ -232,6 +234,11 @@ See [Security](docs/pages/security.mdx) for the full threat model and the mechan
 - [API service](services/api-rs/) — Rust control plane
 - [Slackbot](services/slackbotv2/) — Slack integration
 - [Sandbox](services/sandbox/) — agent runtime image
+
+## Fork development
+
+See the [fork documentation](docs/index.md) for project requirements and the
+[working loop](docs/documentation.md#工作循环) for planning, validation, and changelog entries.
 
 ## Contributing
 
