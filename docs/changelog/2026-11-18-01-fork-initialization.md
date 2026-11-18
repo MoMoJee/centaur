@@ -10,4 +10,12 @@
 
 暂存文档通过单一 H1、相对链接和锚点、公开内容扫描及 `git diff --cached --check`。核对了标签 SHA、分支、上游指南原文和 LICENSE。
 
-WSL 环境已确认。主代理正在独立执行核心 Rust crate 基线，软件测试结果待记录。共享沙箱功能、候选版本部署和 PVE 升级实测留待后续实施。
+在 WSL 2 Ubuntu 24.04.5 x86_64 的原生文件系统上验证固定上游提交，使用 Rust/Cargo 1.100.0 和独立的 PostgreSQL 16 + pgvector 0.6.0 临时实例。分别为 Runtime 和 SQLx 配置测试库，测试结束后关闭实例。Cargo 依赖使用锁定版本，预取后离线编译。以下命令均退出 0。
+
+| 检查 | 结果 |
+| --- | --- |
+| `cargo fmt --all --check` 与 `bash -n services/sandbox/entrypoint.sh` | 通过 |
+| `cargo test --offline --locked -p harness-server -p centaur-session-runtime -p centaur-api-server -p centaur-session-sqlx -- --test-threads=1` | 630 通过、0 失败。5 项真实 harness 用例被上游标记为忽略。数据库覆盖 PostgreSQL 路径。 |
+| `uv run --no-project --python 3.11 --with tomli-w==1.2.0 python -m unittest discover -s services/sandbox -p 'test_*.py'` | 68 通过 |
+
+通过的是上游组件基线。ParadeDB 专属路径、候选镜像、Kubernetes 和网页端到端、真实模型及生产升级验收属于后续阶段。共享沙箱功能按[实施计划](../plan/2026-11-18-02-shared-sandbox.md)待实施。

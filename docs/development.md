@@ -1,6 +1,6 @@
 # 开发与验证
 
-本地环境为 Ubuntu 24.04.5 WSL2（x86_64），已确认 Node.js `v22.23.2`、Postgres 16、pgvector 与 Rust/Cargo `1.100.0` 可用。以下命令从固定上游标签的源码及 CI 核对。四个核心 Rust crate 的基线由主代理执行，结果待记录。
+本地环境为 Ubuntu 24.04.5 WSL2（x86_64），已确认 Node.js `v22.23.2`、Postgres 16、pgvector 与 Rust/Cargo `1.100.0` 可用。以下命令从固定上游标签的源码及 CI 核对。2026-11-18 的实测见 [初始化变更记录](changelog/2026-11-18-01-fork-initialization.md#验证状态)。
 
 ## 准备环境
 
@@ -25,7 +25,7 @@ cargo clippy --locked --workspace --all-targets -- -D warnings
 
 ### Postgres 与控制面
 
-按 [DB CI](../.github/workflows/ci.yml) 创建独立临时测试库。CI 的 [启动脚本](../.github/scripts/start-test-postgres.sh) 支持 `paradedb` 和 `pgvector`，只为本地测试启动容器。运行前分别导出指向一次性数据库的 `SESSION_SQLX_TEST_DATABASE_URL` 与 `SESSION_RUNTIME_TEST_DATABASE_URL`，连接参数保存在本地测试环境中。SQLx 迁移用例按 CI 覆盖两种搜索后端。Runtime 使用单独的库并串行执行。
+按 [DB CI](../.github/workflows/ci.yml) 创建独立临时测试库。CI 的 [启动脚本](../.github/scripts/start-test-postgres.sh) 支持 `paradedb` 和 `pgvector`，只为本地测试启动容器。运行前分别导出指向一次性数据库的 `SESSION_SQLX_TEST_DATABASE_URL` 与 `SESSION_RUNTIME_TEST_DATABASE_URL`，连接参数保存在本地测试环境中。SQLx 迁移用例按 CI 覆盖两种搜索后端。Runtime 使用单独的库并串行执行。本地只跑 Postgres 后端时可以使用一个临时 PostgreSQL 16 实例，安装 `pgvector`，为两组测试建立独立数据库。使用临时 Unix socket 或回环监听，测试结束后停止独立实例。
 
 ```bash
 cargo test --locked -p centaur-session-sqlx
