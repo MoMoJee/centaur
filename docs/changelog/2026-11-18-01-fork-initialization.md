@@ -18,4 +18,6 @@
 | `cargo test --offline --locked -p harness-server -p centaur-session-runtime -p centaur-api-server -p centaur-session-sqlx -- --test-threads=1` | 630 通过、0 失败。5 项真实 harness 用例被上游标记为忽略。数据库覆盖 PostgreSQL 路径。 |
 | `uv run --no-project --python 3.11 --with tomli-w==1.2.0 python -m unittest discover -s services/sandbox -p 'test_*.py'` | 68 通过 |
 
+2026-11-19 补跑独立的 Codex 协议工作区。`cargo test --offline --locked --manifest-path crates/harness-server-conformance/Cargo.toml --test codex_protocol` 通过 3 项，覆盖请求参数、响应和通知。
+
 通过的是上游组件基线。ParadeDB 专属路径、候选镜像、Kubernetes 和网页端到端、真实模型及生产升级验收属于后续阶段。共享沙箱功能按[实施计划](../plan/2026-11-18-02-shared-sandbox.md)待实施。
